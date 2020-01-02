@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgbd.mapper.EchartsMapper">
+
+    
+    
+    
+    <select id="selectAllYear" resultType="cn.kgbd.model.IllnessYear">
+        SELECT `yid`,`year` FROM(SELECT `yid`,`year` FROM illnessYear ORDER BY year DESC LIMIT 0,10) a ORDER BY `year`
+    </select>
+    <select id="selectAllIllness" resultType="cn.kgbd.model.Illness">
+        select `iid`,`illnessName` from illness
+    </select>
+    <sql id="sql">
+        SELECT i.`iid`,`year`,`illnessName`,`sum` FROM statistics s RIGHT JOIN (SELECT * from illnessYear y ORDER BY y.`year` DESC LIMIT 0,10)as a ON s.yid=a.yid
+LEFT JOIN illness i ON i.iid=s.iid ORDER BY illnessName,year
+    </sql>
+    <select id="selectEchartsA" resultMap="a">
+       <include refid="sql"/> LIMIT 0,10
+    </select>
+    <select id="selectEchartsB" resultMap="a">
+        <include refid="sql"/> LIMIT 10,10
+    </select>
+    <select id="selectEchartsC" resultMap="a">
+        <include refid="sql"/> LIMIT 20,10
+    </select>
+    <select id="selectEchartsD" resultMap="a">
+        <include refid="sql"/> LIMIT 30,10
+    </select>
+    <select id="selectEchartsE" resultMap="a">
+        <include refid="sql"/> LIMIT 40,10
+    </select>
+    <select id="selectEchartsF" resultMap="a">
+        <include refid="sql"/> LIMIT 50,10
+    </select>
+    <select id="selectEchartsG" resultMap="a">
+        <include refid="sql"/> LIMIT 60,10
+    </select>
+    <select id="selectEchartsH" resultMap="a">
+        <include refid="sql"/> LIMIT 70,10
+    </select>
+    <select id="selectEchartsI" resultMap="a">
+        <include refid="sql"/> LIMIT 80,10
+    </select>
+    <select id="selectEchartsJ" resultMap="a">
+        <include refid="sql"/> LIMIT 90,10
+    </select>
+
+    <resultMap id="a" type="Echarts">
+        <result property="name" column="illnessName"/>
+        <collection property="data" ofType="java.lang.Integer">
+            <result property="value" column="sum"/>
+        </collection>
+    </resultMap>
+
+</mapper>
