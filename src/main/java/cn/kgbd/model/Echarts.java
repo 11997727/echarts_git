@@ -31,3 +31,4 @@ public class Echarts {
 //    private Integer sum;
 //    private String illnessName;
 }
+
